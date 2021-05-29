@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import useStyles from './styles';
 import FileBase from 'react-file-base64';
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { createPost, updatePost } from '../../actions/posts'
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 
 
 const Form = ({ currentId, setCurrentId }) => {
-    const [postData, setPostData] = useState({ title: '', message: '', tags: '', selectedFile: '' })
+    const [postData, setPostData] = useState({ make: '', comment: '', tags: [], selectedFile: '', model: '', year: '' })
     const post = useSelector((state) => (currentId ? state.posts.posts.find((p) => p._id === currentId) : null));
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -37,38 +37,54 @@ const Form = ({ currentId, setCurrentId }) => {
 
     const clear = () => {
         setCurrentId(0);
-        setPostData({ title: '', message: '', tags: '', selectedFile: '' })
+        setPostData({ title: '', message: '', tags: [], selectedFile: '' })
     }
 
     if (!user?.result?.name) {
         return (
-            <Paper className={classes.paper}>
-                <Typography variant="h6" align="center">
-                    Please Sign In to create your own memory and like others
+            <Paper className={classes.paper} elevation={6} >
+                <Typography className={classes.typography} align="center" component={Link} to="auth" >
+                    Please Sign In or Sign Up to upload your own favourite car
                 </Typography>
             </Paper>
         )
     }
 
     return (
-        <Paper className={classes.paper} elevation={6}>
+        <Paper className={classes.paper} elevation={6} >
             <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-                <Typography variant="h6">{currentId ? 'Editing' : 'Creating'} </Typography>
+                <Typography variant="h6">{currentId ? 'Edit your card' : 'Create a card'} </Typography>
                 <TextField
-                    name="title"
+                    name="make"
                     variant="outlined"
-                    label="Title"
+                    label="Make"
                     fullWidth
-                    value={postData.title}
-                    onChange={(e) => setPostData({ ...postData, title: e.target.value })}
+                    value={postData.make}
+                    onChange={(e) => setPostData({ ...postData, make: e.target.value })}
                 />
                 <TextField
-                    name="message"
+                    name="model"
                     variant="outlined"
-                    label="Message"
+                    label="Model"
                     fullWidth
-                    value={postData.message}
-                    onChange={(e) => setPostData({ ...postData, message: e.target.value })}
+                    value={postData.model}
+                    onChange={(e) => setPostData({ ...postData, model: e.target.value })}
+                />
+                <TextField
+                    name="year"
+                    variant="outlined"
+                    label="Year"
+                    fullWidth
+                    value={postData.year}
+                    onChange={(e) => setPostData({ ...postData, year: e.target.value })}
+                />
+                <TextField
+                    name="comment"
+                    variant="outlined"
+                    label="Add comment"
+                    fullWidth
+                    value={postData.comment}
+                    onChange={(e) => setPostData({ ...postData, comment: e.target.value })}
                 />
                 <TextField
                     name="tags"
@@ -84,8 +100,8 @@ const Form = ({ currentId, setCurrentId }) => {
                         multiple={false}
                         onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })} />
                 </div>
-                <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
-                <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
+                <Button className={classes.buttonSubmit} variant="contained" color="primary" size="small" type="submit" fullWidth>Submit</Button>
+                <Button variant="outlined" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
             </form>
         </Paper>
     )

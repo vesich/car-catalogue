@@ -4,11 +4,11 @@ import { GoogleLogin } from 'react-google-login'
 import LockOutLinedIcon from '@material-ui/icons/LockOutlined';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import {signin, signup} from '../../actions/auth'
+import { signin, signup } from '../../actions/auth'
 
 import useStyles from './styles'
 import Input from './Input'
-import Icon from './icon'
+import Icon from './Icon'
 
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' }
 
@@ -29,9 +29,15 @@ const Auth = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
 
         if (isSignup) {
+
+            //
+            if (formData.password.length < 6) { return alert('Password must be at least 6 characters long!') }
+            if (formData.password !== formData.confirmPassword) { return alert('Passwords don\'t match!') }
+            // Pop up modal to be implemented and many more validations !!
+           
+
             dispatch(signup(formData, history))
         } else {
             dispatch(signin(formData, history))
@@ -39,6 +45,11 @@ const Auth = () => {
     }
 
     const handleChange = (e) => {
+        // if (e.target.name == 'firstName' || e.target.name == 'lastName') {
+        //     setFormData({ ...formData, [e.target.name]: e.target.value[0].toUpperCase() + e.target.value.slice(1).toLowerCase() })
+        // } else {
+
+        // }
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
@@ -48,7 +59,7 @@ const Auth = () => {
 
         try {
             dispatch({ type: 'AUTH', data: { result, token } });
-            history.push('/')
+            history.push('/posts')
 
         } catch (error) {
             console.log(error);
@@ -100,12 +111,10 @@ const Auth = () => {
                         onFailure={googleFailure}
                         cookiePolicy="single_host_origin"
                     />
-                    <Grid container justify="flex-end">
-                        <Grid item>
-                            <Button onClick={switchMode} >
-                                {isSignup ? 'Already have an account? Sign In' : 'Don\'t have an account? Sign Up'}
-                            </Button>
-                        </Grid>
+                    <Grid container justify="flex-start">
+                        <Button fullWidth color="inherit" size="small" onClick={switchMode} >
+                            {isSignup ? 'Already have an account? Sign In' : 'Don\'t have an account? Sign Up'}
+                        </Button>
                     </Grid>
                 </form>
             </Paper>

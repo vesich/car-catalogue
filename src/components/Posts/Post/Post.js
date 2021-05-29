@@ -35,12 +35,23 @@ const Post = ({ post, setCurrentId }) => {
         history.push(`/posts/${post._id}`)
     }
 
+    const handleDelete = () => {
+        //better UI here !!
+        let confirmed = window.confirm('Are you sure?');
+        if (confirmed) {
+            dispatch(deletePost(post._id))
+        }
+
+    }
+
+    let commentPreview = post.comment.slice(0, 20) + '...'
+
     return (
         <Card className={classes.card} raised elevation={6}>
             <ButtonBase component="span" className={classes.cardAction} onClick={openPost} >
-                <CardMedia className={classes.media} image={post.selectedFile} title={post.title} />
+                <CardMedia className={classes.media} image={post.selectedFile} make={post.make} />
                 <div className={classes.overlay}>
-                    <Typography variant="h6">{post.name}</Typography>
+                    <Typography variant="h6"> {post.name}</Typography>
                     <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
                 </div>
                 {
@@ -56,11 +67,11 @@ const Post = ({ post, setCurrentId }) => {
                     )
                 }
                 <div className={classes.details}>
-                    <Typography variant="body2" color="secondary" >{post.tags.map((tag) => `#${tag} `)}</Typography>
+                    <Typography variant="body2" color="primary" >{post.tags.map((tag) => `#${tag} `)}</Typography>
                 </div>
-                <Typography className={classes.title} variant="h5" gutterBottom >{post.title}</Typography>
+                <Typography className={classes.title} variant="h6" gutterBottom >{post.make} {post.model}</Typography>
                 <CardContent>
-                    <Typography variant="body2" color="textSecondary" component="p">{post.message}</Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">{post.comment.length > 20 ? commentPreview : post.comment}</Typography>
                 </CardContent>
             </ButtonBase>
             <CardActions className={classes.cardActions} >
@@ -69,7 +80,7 @@ const Post = ({ post, setCurrentId }) => {
                 </Button>
                 {
                     (user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
-                        <Button size="small" color="primary" onClick={() => dispatch(deletePost(post._id))}>
+                        <Button size="small" color="primary" onClick={handleDelete}>
                             <DeleteIcon fontSize="small" />
                     Delete
                         </Button>)

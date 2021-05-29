@@ -65,7 +65,7 @@ const Home = () => {
                             <TextField
                                 name="search"
                                 variant="outlined"
-                                label="Search Memories"
+                                label="Search Cars"
                                 onKeyPress={handleKeyPress}
                                 fullWidth
                                 value={search}
@@ -77,7 +77,7 @@ const Home = () => {
                                 onDelete={(chip) => handleDelete(chip)}
                                 label="Search Tags"
                                 variant="outlined" />
-                            <Button onClick={searchPost} className={classes.searchButton} variant="contained" color="primary" >Search</Button>
+                            <Button onClick={searchPost} className={classes.searchButton} size="small" variant="contained" color="primary" >Search</Button>
                         </AppBar>
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
                         {(!searchQuery && !tags.length) && (

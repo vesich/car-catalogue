@@ -2,10 +2,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
   media: {
-    borderRadius: '20px',
-    objectFit: 'cover',
-    width: '100%',
-    maxHeight: '600px',
+    borderRadius: '15px',
+    maxHeight: '350px',
+    maxWidth: '550px',
 
   },
   card: {
@@ -22,7 +21,7 @@ export default makeStyles((theme) => ({
     flex: 1,
   },
   imageSection: {
-    marginLeft: '20px',
+    margin: '20px',
     [theme.breakpoints.down('sm')]: {
       marginLeft: 0,
     },
