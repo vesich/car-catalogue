@@ -3,20 +3,21 @@ import { Link, useHistory, useLocation } from 'react-router-dom'
 import { AppBar, Avatar, Toolbar, Typography, Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import decode from 'jwt-decode'
+import * as actionType from '../../constants/actionTypes';
 
 
 import memoriesText from '../../images/cars.png';
 import useStyles from './styles';
 
 const Navbar = () => {
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
     const history = useHistory();
     const classes = useStyles();
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
     const dispatch = useDispatch()
     const location = useLocation();
 
     const logout = () => {
-        dispatch({ type: 'LOGOUT' })
+        dispatch({ type: actionType.LOGOUT })
 
         history.push('/auth');
         setUser(null)

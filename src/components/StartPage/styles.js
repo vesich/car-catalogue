@@ -12,7 +12,7 @@ export default makeStyles((theme) => ({
     },
     image: {
         margin: '10px 40px',
-        maxWidth: '70%',
+        maxWidth: '50%',
         justifyContent: 'center',
         position: 'relative',
         paddingBottom: '30px',

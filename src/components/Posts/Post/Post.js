@@ -48,24 +48,26 @@ const Post = ({ post, setCurrentId }) => {
 
     return (
         <Card className={classes.card} raised elevation={6}>
-            <ButtonBase component="span" className={classes.cardAction} onClick={openPost} >
-                <CardMedia className={classes.media} image={post.selectedFile} make={post.make} />
-                <div className={classes.overlay}>
-                    <Typography variant="h6"> {post.name}</Typography>
-                    <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
-                </div>
-                {
-                    (user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
-                        <div className={classes.overlay2}>
-                            <Button
-                                style={{ color: 'white' }}
-                                size="small"
-                                onClick={() => setCurrentId(post._id)} >
-                                <MoreHorizIcon fontSize="default" />
-                            </Button>
-                        </div>
-                    )
-                }
+
+            <CardMedia className={classes.media} image={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} make={post.make} />
+            <div className={classes.overlay}>
+                <Typography variant="h6"> {post.name}</Typography>
+                <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
+            </div>
+            {
+                (user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
+                    <div className={classes.overlay2}>
+                        <Button
+                            style={{ color: 'white' }}
+                            size="small"
+                            onClick={() => setCurrentId(post._id)} >
+                            <MoreHorizIcon fontSize="default" />
+                        </Button>
+                    </div>
+                )
+            }
+            {/* <ButtonBase component="span" className={classes.cardAction} onClick={openPost} > */}
+            <Button onClick={openPost} style={{margin: '10px 20px'}}  size="small" variant="contained" color="primary" >Details</Button>
                 <div className={classes.details}>
                     <Typography variant="body2" color="primary" >{post.tags.map((tag) => `#${tag} `)}</Typography>
                 </div>
@@ -73,7 +75,7 @@ const Post = ({ post, setCurrentId }) => {
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">{post.comment.length > 20 ? commentPreview : post.comment}</Typography>
                 </CardContent>
-            </ButtonBase>
+            {/* </ButtonBase> */}
             <CardActions className={classes.cardActions} >
                 <Button size="small" color="primary" disabled={!user?.result} onClick={() => dispatch(likePost(post._id))}>
                     <Likes />

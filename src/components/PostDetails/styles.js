@@ -32,6 +32,16 @@ export default makeStyles((theme) => ({
       flexDirection: 'column',
     },
   },
+  smallCard: {
+    borderRadius: '10px',
+    margin: '20px',
+    padding: '20px',
+    cursor: "pointer",
+    alignItems: 'center'
+  },
+  littleImage: {
+    width: '150px'
+  },
   loadingPaper: {
     display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px', borderRadius: '15px', height: '39vh',
   },
