@@ -3,9 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
   media: {
     borderRadius: '15px',
-    maxHeight: '350px',
-    maxWidth: '550px',
-
+    maxHeight: '300px',
+    maxWidth: '450px',
+    position: 'relative',
+    justifyContent: 'center'
   },
   card: {
     display: 'flex',
@@ -21,6 +22,7 @@ export default makeStyles((theme) => ({
     flex: 1,
   },
   imageSection: {
+    
     margin: '20px',
     [theme.breakpoints.down('sm')]: {
       marginLeft: 0,

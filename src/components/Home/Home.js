@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Container, Grow, Grid, Paper, AppBar, TextField, Button } from '@material-ui/core';
+import { Container, Grow, Grid, Paper, AppBar, TextField, Button, Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import ChipInput from 'material-ui-chip-input';
@@ -79,6 +79,9 @@ const Home = () => {
                                 variant="outlined" />
                             <Button onClick={searchPost} className={classes.searchButton} size="small" variant="contained" color="primary" >Search</Button>
                         </AppBar>
+                        <Container>
+                            <Typography>weather section comming soon</Typography>
+                        </Container>
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
                         {(!searchQuery && !tags.length) && (
                             <Paper elevation={6} className={classes.pagination}>
