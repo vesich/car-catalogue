@@ -62,7 +62,7 @@ const Home = () => {
 
     const handleWeather = async (pos) => {
         const { latitude, longitude } = pos.coords;
-        
+
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude.toFixed(4)}&lon=${longitude.toFixed(4)}&appid=b4009290ee31edbbf2a3a404a73c813b&units=imperial`);
         const info = await response.json();
         console.log(info);
@@ -70,7 +70,10 @@ const Home = () => {
     }
 
     useEffect(async () => {
-        navigator.geolocation.getCurrentPosition(handleWeather);
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(handleWeather);
+        }
+
     }, [])
 
     return (
@@ -104,7 +107,7 @@ const Home = () => {
 
                             ? (<Paper elevation={6} className={classes.pagination}>
                                 <Typography>{fetchedData?.name} -- {fetchedData?.main?.temp}</Typography>
-                                <Typography>{fetchedData?.weather[0].description}</Typography>
+                                <Typography>{fetchedData?.weather?.[0].description}</Typography>
                             </Paper>)
                             : null
                         }
