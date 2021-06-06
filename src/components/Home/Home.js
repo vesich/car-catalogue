@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Container, Grow, Grid, Paper, AppBar, TextField, Button, Typography } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import ChipInput from 'material-ui-chip-input';
 
 import Pagination from '../Pagination';
-import { getPostsBySearch } from '../../actions/posts'
+import { getPostsBySearch } from '../../actions/posts';
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form'
 
@@ -28,9 +28,13 @@ const Home = () => {
     const [search, setSearch] = useState("")
     const [tags, setTags] = useState([])
 
+    const [data, setData] = useState("");
+    const [infoInput, setInfoInput] = useState("")
+    const [fetchedData, setFetchedData] = useState({});
 
 
     const handleKeyPress = (e) => {
+
         if (e.keyCode === 13) {
             searchPost();
         }
@@ -52,6 +56,22 @@ const Home = () => {
     const handleDelete = (tagToDelete) => {
         setTags(tags.filter(tag => tag !== tagToDelete))
     }
+
+    // weather API
+
+
+    const handleWeather = async (pos) => {
+        const { latitude, longitude } = pos.coords;
+        
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude.toFixed(4)}&lon=${longitude.toFixed(4)}&appid=b4009290ee31edbbf2a3a404a73c813b&units=imperial`);
+        const info = await response.json();
+        console.log(info);
+        setFetchedData(info);
+    }
+
+    useEffect(async () => {
+        navigator.geolocation.getCurrentPosition(handleWeather);
+    }, [])
 
     return (
         <Grow in>
@@ -79,9 +99,16 @@ const Home = () => {
                                 variant="outlined" />
                             <Button onClick={searchPost} className={classes.searchButton} size="small" variant="contained" color="primary" >Search</Button>
                         </AppBar>
-                        <Container>
-                            <Typography>weather section comming soon</Typography>
-                        </Container>
+
+                        {fetchedData
+
+                            ? (<Paper elevation={6} className={classes.pagination}>
+                                <Typography>{fetchedData?.name} -- {fetchedData?.main?.temp}</Typography>
+                                <Typography>{fetchedData?.weather[0].description}</Typography>
+                            </Paper>)
+                            : null
+                        }
+
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
                         {(!searchQuery && !tags.length) && (
                             <Paper elevation={6} className={classes.pagination}>
