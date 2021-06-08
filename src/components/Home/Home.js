@@ -65,8 +65,12 @@ const Home = () => {
 
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude.toFixed(4)}&lon=${longitude.toFixed(4)}&appid=b4009290ee31edbbf2a3a404a73c813b&units=imperial`);
         const info = await response.json();
-        console.log(info);
+       
+
+      
         setFetchedData(info);
+
+
     }
 
     useEffect(async () => {
@@ -105,11 +109,12 @@ const Home = () => {
 
                         {fetchedData
 
-                            ? (<Paper elevation={6} className={classes.pagination}>
-                                <Typography>{fetchedData?.name} -- {fetchedData?.main?.temp}</Typography>
+                            && (<Paper elevation={6} className={classes.weather}>
+                                <Typography>{fetchedData?.name}  {Math.floor(fetchedData?.main?.temp)}</Typography>
+                                <img src={`http://openweathermap.org/img/wn/${fetchedData?.weather?.[0].icon}@2x.png`} alt="weather icon" />
                                 <Typography>{fetchedData?.weather?.[0].description}</Typography>
                             </Paper>)
-                            : null
+                          
                         }
 
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
