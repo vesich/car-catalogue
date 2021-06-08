@@ -111,7 +111,7 @@ const Home = () => {
 
                             && (<Paper elevation={6} className={classes.weather}>
                                 <Typography>{fetchedData?.name}  {Math.floor(fetchedData?.main?.temp)}</Typography>
-                                <img src={`http://openweathermap.org/img/wn/${fetchedData?.weather?.[0].icon}@2x.png`} alt="weather icon" />
+                                <img style={{maxWidth: '100px', margin: '10px auto'}} src={`http://openweathermap.org/img/wn/${fetchedData?.weather?.[0].icon}@2x.png`} alt="weather icon" />
                                 <Typography>{fetchedData?.weather?.[0].description}</Typography>
                             </Paper>)
                           
