@@ -16,6 +16,7 @@ const Auth = () => {
     const [showPassword, setShowPassword] = useState(false)
     const [isSignup, setIsSignup] = useState(false);
     const [formData, setFormData] = useState(initialState)
+    const [errors, setErrors] = useState("");
     const history = useHistory();
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -36,10 +37,12 @@ const Auth = () => {
             if (formData.password.length < 6) { return alert('Password must be at least 6 characters long!') }
             if (formData.password !== formData.confirmPassword) { return alert('Passwords don\'t match!') }
             // Pop up modal to be implemented and many more validations !!
-           
+
 
             dispatch(signup(formData, history))
         } else {
+            if (formData.password.length < 6) { setErrors('Wrong credentials!') }
+            console.log(errors);
             dispatch(signin(formData, history))
         }
     }
@@ -68,7 +71,8 @@ const Auth = () => {
 
     const googleFailure = (err) => {
         console.log(err);
-        console.log('Google Sign In was unsuccessful. Try again later');
+        setErrors('Google Sign In was unsuccessful. Try again later')
+
     }
 
 
@@ -80,6 +84,7 @@ const Auth = () => {
                 </Avatar>
                 <Typography variant="h5">{isSignup ? 'Sign Up' : 'Sign In'}</Typography>
                 <form className={classes.form} onSubmit={handleSubmit}>
+                    {errors ? <Typography className={classes.errors} >{errors}</Typography> : null}
                     <Grid container spacing={2}>
                         {
                             isSignup && (

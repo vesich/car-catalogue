@@ -29,8 +29,7 @@ const Home = () => {
     const [tags, setTags] = useState([])
 
     const [data, setData] = useState("");
-    const [infoInput, setInfoInput] = useState("")
-    const [fetchedData, setFetchedData] = useState({});
+    const [fetchedData, setFetchedData] = useState("");
 
 
     const handleKeyPress = (e) => {
@@ -65,16 +64,18 @@ const Home = () => {
 
         const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude.toFixed(4)}&lon=${longitude.toFixed(4)}&appid=b4009290ee31edbbf2a3a404a73c813b&units=imperial`);
         const info = await response.json();
-       
 
-      
+
+
         setFetchedData(info);
+        console.log(info);
 
 
     }
 
     useEffect(async () => {
         if (navigator.geolocation) {
+            console.log(navigator.geolocation);
             navigator.geolocation.getCurrentPosition(handleWeather);
         }
 
@@ -111,10 +112,10 @@ const Home = () => {
 
                             && (<Paper elevation={6} className={classes.weather}>
                                 <Typography>{fetchedData?.name}  {Math.floor(fetchedData?.main?.temp)}</Typography>
-                                <img style={{maxWidth: '100px', margin: '10px auto'}} src={`http://openweathermap.org/img/wn/${fetchedData?.weather?.[0].icon}@2x.png`} alt="weather icon" />
+                                <img style={{ maxWidth: '100px', margin: '10px auto' }} src={`http://openweathermap.org/img/wn/${fetchedData?.weather?.[0].icon}@2x.png`} alt="weather icon" />
                                 <Typography>{fetchedData?.weather?.[0].description}</Typography>
                             </Paper>)
-                          
+
                         }
 
                         <Form currentId={currentId} setCurrentId={setCurrentId} />
