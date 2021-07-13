@@ -1,2 +1,1 @@
-Client Side of Car Catalogue 
-//TODO description
+This is the client side of Car Catalogue. Technologies used: React, Redux
